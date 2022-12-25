@@ -31,6 +31,27 @@ class CampCleanup
     end
   end
 
+  #####
+  #
+  # The version below is arguably a better implementation, but take a look at the Rust version.
+  # It felt like it was worth it to do it this way to get an opportunity to talk about one of the
+  # trickier aspects of Rust's syntax, if the solution were structured as above instead of like this.
+  # So....leaving this for reference, but keeping the above solution for the writeup.
+  #
+  #####
+  #
+  # def redundant?(left, right)
+  #   if left.min <= right.min && left.max >= right.max
+  #     true
+  #   elsif left.min >= right.min && left.max <= right.max
+  #     true
+  #   else
+  #     false  
+  #   end
+  # end
+  #
+  #####
+
   def sort_by_containment(left, right)
     if left.min <= right.min && left.max >= right.max
       [right, left]
