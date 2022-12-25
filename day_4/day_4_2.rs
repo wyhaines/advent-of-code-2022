@@ -19,7 +19,7 @@ impl CampCleanup {
 
     fn run(&self) {
         println!(
-            "Of {} assignments, {} are redundant.",
+            "Of {} assignments, {} overlap.",
             self.assignments.len(),
             self.count_redundant_assignments(&self.assignments)
         );
@@ -47,21 +47,21 @@ impl CampCleanup {
     fn count_redundant_assignments(&self, assignments: &Vec<Vec<Assignment>>) -> usize {
         (*assignments)
             .iter()
-            .filter(|assignment| self.is_redundant(&assignment[0], &assignment[1]))
+            .filter(|assignment| self.any_overlap(&assignment[0], &assignment[1]))
             .count()
     }
 
-    fn is_redundant(&self, left: &Assignment, right: &Assignment) -> bool {
-        let (smaller, larger) = self.sort_by_containment(left, right);
-        (*smaller).start >= (*larger).start
-            && (*smaller).end <= (*larger).end
+    fn any_overlap(&self, left: &Assignment, right: &Assignment) -> bool {
+        self.overlap(left, right) || self.overlap(right, left)
     }
 
-    fn sort_by_containment<'a>(&'a self, left: &'a Assignment, right: &'a Assignment) -> (&Assignment, &Assignment) {
-        if (*left).start <= (*right).start && (*left).end >= (*right).end {
-            (right, left)
+    fn overlap(&self, left: &Assignment, right: &Assignment) -> bool {
+        if (*left).start >= (*right).start && (*left).start <= (*right).end {
+            true
+        } else if (*left).end >= (*right).start && (*left).end <= (*right).end {
+            true
         } else {
-            (left, right)
+            false
         }
     }
 }
