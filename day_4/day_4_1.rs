@@ -14,7 +14,8 @@ impl CampCleanup {
     fn new(filename: &str) -> CampCleanup {
         let assignments = Self::parse_assignments(filename);
 
-        CampCleanup { assignments }
+        //CampCleanup { assignments }
+        Self { assignments }
     }
 
     fn run(&self) {
@@ -45,7 +46,7 @@ impl CampCleanup {
     }
 
     fn count_redundant_assignments(&self, assignments: &Vec<Vec<Assignment>>) -> usize {
-        (*assignments)
+        assignments
             .iter()
             .filter(|assignment| self.is_redundant(&assignment[0], &assignment[1]))
             .count()
@@ -53,12 +54,15 @@ impl CampCleanup {
 
     fn is_redundant(&self, left: &Assignment, right: &Assignment) -> bool {
         let (smaller, larger) = self.sort_by_containment(left, right);
-        (*smaller).start >= (*larger).start
-            && (*smaller).end <= (*larger).end
+        smaller.start >= larger.start && smaller.end <= larger.end
     }
 
-    fn sort_by_containment<'a>(&'a self, left: &'a Assignment, right: &'a Assignment) -> (&Assignment, &Assignment) {
-        if (*left).start <= (*right).start && (*left).end >= (*right).end {
+    fn sort_by_containment<'a>(
+        &'a self,
+        left: &'a Assignment,
+        right: &'a Assignment,
+    ) -> (&Assignment, &Assignment) {
+        if left.start <= right.start && left.end >= right.end {
             (right, left)
         } else {
             (left, right)

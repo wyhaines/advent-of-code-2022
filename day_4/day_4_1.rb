@@ -24,11 +24,7 @@ class CampCleanup
 
   def redundant?(left, right)
     smaller, larger = sort_by_containment(left, right)
-    if smaller.min >= larger.min && smaller.max <= larger.max
-      true
-    else
-      false
-    end
+    smaller.min >= larger.min && smaller.max <= larger.max
   end
 
   #####
