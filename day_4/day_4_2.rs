@@ -47,11 +47,11 @@ impl CampCleanup {
     fn count_redundant_assignments(&self, assignments: &Vec<Vec<Assignment>>) -> usize {
         (*assignments)
             .iter()
-            .filter(|assignment| self.any_overlap(&assignment[0], &assignment[1]))
+            .filter(|assignment| self.is_redundant(&assignment[0], &assignment[1]))
             .count()
     }
 
-    fn any_overlap(&self, left: &Assignment, right: &Assignment) -> bool {
+    fn is_redundant(&self, left: &Assignment, right: &Assignment) -> bool {
         self.overlap(left, right) || self.overlap(right, left)
     }
 

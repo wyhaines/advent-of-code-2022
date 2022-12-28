@@ -16,11 +16,11 @@ class CampCleanup
 
   def count_redundant_assignments(assignments)
     assignments.select do |(left, right)|
-      any_overlap?(left, right)
+      redundant?(left, right)
     end.size
   end
 
-  def any_overlap?(left, right)
+  def redundant?(left, right)
     overlap?(left, right) || overlap?(right, left)
   end
 

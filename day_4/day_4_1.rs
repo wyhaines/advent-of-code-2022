@@ -58,10 +58,10 @@ impl CampCleanup {
     }
 
     fn sort_by_containment<'a>(
-        &'a self,
+        &self,
         left: &'a Assignment,
         right: &'a Assignment,
-    ) -> (&Assignment, &Assignment) {
+    ) -> (&'a Assignment, &'a Assignment) {
         if left.start <= right.start && left.end >= right.end {
             (right, left)
         } else {
