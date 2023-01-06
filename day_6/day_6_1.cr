@@ -104,7 +104,7 @@ class TuningTrouble
   # end
   #
   # def find_start_of_packet
-  #   @data.chars.each_cons(4).index! {|chunk| chunk.uniq == chunk} + 4
+  #   @data.chars.each_cons(4, reuse: true).index! {|chunk| chunk.uniq == chunk} + 4
   # end
 
   #####
